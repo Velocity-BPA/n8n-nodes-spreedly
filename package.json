@@ -1,0 +1,83 @@
+{
+  "name": "n8n-nodes-spreedly",
+  "version": "1.0.0",
+  "description": "n8n community node for Spreedly payment orchestration - Universal tokenization, multi-gateway routing, and PCI-compliant payment processing through 100+ payment gateways.",
+  "license": "BUSL-1.1",
+  "author": {
+    "name": "Velocity BPA",
+    "email": "licensing@velobpa.com",
+    "url": "https://velobpa.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Velocity-BPA/n8n-nodes-spreedly.git"
+  },
+  "homepage": "https://github.com/Velocity-BPA/n8n-nodes-spreedly#readme",
+  "bugs": {
+    "url": "https://github.com/Velocity-BPA/n8n-nodes-spreedly/issues"
+  },
+  "keywords": [
+    "n8n",
+    "n8n-community-node-package",
+    "spreedly",
+    "payment",
+    "payment-gateway",
+    "tokenization",
+    "pci-compliance",
+    "stripe",
+    "braintree",
+    "adyen",
+    "authorize.net",
+    "payment-orchestration",
+    "3d-secure",
+    "credit-card"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/SpreedlyApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Spreedly/Spreedly.node.js",
+      "dist/nodes/Spreedly/SpreedlyTrigger.node.js"
+    ]
+  },
+  "scripts": {
+    "build": "tsc && gulp build:icons",
+    "dev": "tsc --watch",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write \"**/*.ts\"",
+    "test": "jest --passWithNoTests",
+    "test:coverage": "jest --coverage --passWithNoTests",
+    "prepublishOnly": "npm run build",
+    "clean": "rm -rf dist node_modules"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.24",
+    "@typescript-eslint/eslint-plugin": "^7.1.0",
+    "@typescript-eslint/parser": "^7.1.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-n8n-nodes-base": "^1.16.1",
+    "gulp": "^4.0.2",
+    "gulp-copy": "^4.0.1",
+    "jest": "^29.7.0",
+    "n8n-workflow": "^1.30.0",
+    "prettier": "^3.2.5",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "n8n-workflow": ">=1.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

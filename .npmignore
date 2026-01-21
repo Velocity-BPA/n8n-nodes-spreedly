@@ -1,0 +1,33 @@
+# Source files (only publish dist)
+credentials/
+nodes/
+index.ts
+tsconfig.json
+.eslintrc.js
+.prettierrc
+
+# Test files
+test/
+
+# Scripts (for development only)
+scripts/
+
+# Git and IDE files
+.git/
+.gitignore
+.idea/
+.vscode/
+
+# Build artifacts
+coverage/
+*.log
+
+# Environment
+.env*
+
+# Documentation source (keep compiled README)
+docs/
+
+# Development files
+gulpfile.js
+jest.config.js
