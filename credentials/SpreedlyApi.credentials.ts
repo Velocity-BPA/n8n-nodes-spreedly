@@ -34,6 +34,14 @@ export class SpreedlyApi implements ICredentialType {
       description: 'Your Spreedly Access Secret from the dashboard',
     },
     {
+      displayName: 'Base URL',
+      name: 'baseUrl',
+      type: 'string',
+      default: 'https://core.spreedly.com/v1',
+      required: true,
+      description: 'The base URL for the Spreedly API',
+    },
+    {
       displayName: 'Use Sandbox',
       name: 'sandbox',
       type: 'boolean',
