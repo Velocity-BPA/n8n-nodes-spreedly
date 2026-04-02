@@ -1,6 +1,6 @@
 # n8n-nodes-spreedly
 
-> [Velocity BPA Licensing Notice]
+> **[Velocity BPA Licensing Notice]**
 >
 > This n8n node is licensed under the Business Source License 1.1 (BSL 1.1).
 >
@@ -8,266 +8,188 @@
 >
 > For licensing information, visit https://velobpa.com/licensing or contact licensing@velobpa.com.
 
-n8n community node for Spreedly payment orchestration - Universal tokenization, multi-gateway routing, and PCI-compliant payment processing through 100+ payment gateways via a single API.
+This n8n community node provides comprehensive integration with Spreedly's secure payment orchestration platform. With 5 core resources including PaymentMethod, Gateway, Transaction, Receiver, and Certificate, it enables secure payment processing, gateway management, and PCI-compliant transaction handling within your n8n workflows.
 
-![Spreedly](https://img.shields.io/badge/Spreedly-Payment%20Orchestration-00D4AA)
-![n8n](https://img.shields.io/badge/n8n-Community%20Node-FF6D5A)
+![n8n Community Node](https://img.shields.io/badge/n8n-Community%20Node-blue)
 ![License](https://img.shields.io/badge/license-BSL--1.1-blue)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)
+![PCI Compliant](https://img.shields.io/badge/PCI-Compliant-green)
+![Payment Processing](https://img.shields.io/badge/Payments-Orchestration-orange)
+![Gateway Management](https://img.shields.io/badge/Multi-Gateway-Management-purple)
 
 ## Features
 
-Spreedly is the leading payment orchestration platform that enables businesses to connect to 100+ payment gateways through a single API. This n8n community node provides full access to Spreedly's API, allowing you to build sophisticated payment workflows.
-
-| Feature | Description |
-|---------|-------------|
-| **Multi-Gateway Support** | Provision and manage 100+ payment gateways (Stripe, Braintree, Adyen, etc.) |
-| **Universal Tokenization** | Tokenize cards once, use across any gateway |
-| **Transaction Processing** | Purchase, authorize, capture, void, refund |
-| **3D Secure** | Full 3DS1 and 3DS2 flow support for SCA compliance |
-| **Receivers** | Deliver card data to non-gateway APIs securely |
-| **Certificates** | Apple Pay / Google Pay certificate management |
-| **Webhook Triggers** | React to payment events in real-time |
-| **Sandbox Mode** | Test all operations without real charges |
+- **Secure Payment Processing** - Process payments across multiple gateways with PCI-compliant tokenization
+- **Gateway Management** - Configure and manage multiple payment gateways from a single interface
+- **Transaction Monitoring** - Track, verify, and manage payment transactions with detailed reporting
+- **Certificate Handling** - Manage SSL certificates and security credentials for payment processing
+- **Receiver Management** - Handle payment receivers and distribution configurations
+- **Multi-Gateway Support** - Integrate with 100+ payment gateways through Spreedly's unified API
+- **Tokenization & Vault** - Securely store payment methods using Spreedly's PCI-compliant vault
+- **Real-time Webhooks** - Process payment events and notifications in real-time
 
 ## Installation
 
 ### Community Nodes (Recommended)
 
-1. Open your n8n instance
+1. Open n8n
 2. Go to **Settings** → **Community Nodes**
 3. Click **Install a community node**
-4. Enter: `n8n-nodes-spreedly`
+4. Enter `n8n-nodes-spreedly`
 5. Click **Install**
 
 ### Manual Installation
 
 ```bash
-# Navigate to your n8n custom nodes directory
-cd ~/.n8n/custom
-
-# Clone or extract the package
-git clone https://github.com/Velocity-BPA/n8n-nodes-spreedly.git
-cd n8n-nodes-spreedly
-
-# Install dependencies and build
-npm install --legacy-peer-deps
-npm run build
+cd ~/.n8n
+npm install n8n-nodes-spreedly
 ```
 
 ### Development Installation
 
 ```bash
-# 1. Extract the zip file
-unzip n8n-nodes-spreedly.zip
+git clone https://github.com/Velocity-BPA/n8n-nodes-spreedly.git
 cd n8n-nodes-spreedly
-
-# 2. Install dependencies
-npm install --legacy-peer-deps
-
-# 3. Build the project
+npm install
 npm run build
-
-# 4. Create symlink to n8n custom nodes directory
 mkdir -p ~/.n8n/custom
 ln -s $(pwd) ~/.n8n/custom/n8n-nodes-spreedly
-
-# 5. Restart n8n
 n8n start
 ```
 
 ## Credentials Setup
 
-| Field | Description |
-|-------|-------------|
-| **Environment Key** | Your Spreedly environment key |
-| **Access Secret** | Your Spreedly access secret |
-| **Sandbox Mode** | Enable for testing (uses sandbox endpoints) |
-
-Get your credentials from the [Spreedly Dashboard](https://dashboard.spreedly.com) under **Settings** → **Environment**.
+| Field | Description | Required |
+|-------|-------------|----------|
+| Environment Key | Your Spreedly environment key | ✓ |
+| Access Secret | Your Spreedly access secret | ✓ |
+| Environment | Spreedly environment (sandbox/production) | ✓ |
 
 ## Resources & Operations
 
-### Gateway
-
-Manage payment gateways (100+ supported types including Stripe, Braintree, Adyen, Authorize.Net, PayPal Commerce, and more).
+### 1. PaymentMethod
 
 | Operation | Description |
 |-----------|-------------|
-| Create | Provision a new gateway |
-| Get | Retrieve gateway details |
-| List | List all gateways |
-| Update | Update gateway configuration |
-| Redact | Delete a gateway |
-| Retain | Mark gateway for permanent storage |
+| Create | Create a new payment method with card or bank details |
+| Get | Retrieve payment method details by token |
+| List | List all payment methods in the environment |
+| Update | Update payment method information |
+| Delete | Remove a payment method from the vault |
+| Verify | Verify payment method validity |
 
-### Payment Method
-
-Tokenize and manage payment methods with universal tokens that work across all gateways.
+### 2. Gateway
 
 | Operation | Description |
 |-----------|-------------|
-| Tokenize | Create a payment method token (credit card or bank account) |
-| Get | Retrieve payment method details |
-| List | List payment methods |
-| Retain | Mark for permanent storage |
-| Redact | Delete a payment method |
-| Recache CVV | Update CVV for a stored card |
-| Store at Gateway | Store token at a specific gateway |
+| Create | Add a new payment gateway configuration |
+| Get | Retrieve gateway details and status |
+| List | List all configured gateways |
+| Update | Update gateway configuration and credentials |
+| Delete | Remove gateway configuration |
+| Test | Test gateway connection and credentials |
 
-### Transaction
-
-Process payments through your configured gateways.
+### 3. Transaction
 
 | Operation | Description |
 |-----------|-------------|
-| Purchase | Charge a payment method |
-| Authorize | Pre-authorize funds |
-| Capture | Capture an authorized transaction |
-| Void | Cancel a transaction |
+| Purchase | Process a purchase transaction |
+| Authorize | Authorize a payment without capturing |
+| Capture | Capture a previously authorized payment |
+| Void | Void an authorized transaction |
 | Refund | Refund a completed transaction |
-| General Credit | Issue credit without prior purchase |
-| Verify | Verify a payment method |
 | Get | Retrieve transaction details |
-| List | List transactions |
-| Get Transcript | Get raw gateway communication |
+| List | List transactions with filtering options |
 
-### 3D Secure
-
-Authenticate payments with 3D Secure for SCA compliance.
+### 4. Receiver
 
 | Operation | Description |
 |-----------|-------------|
-| Initialize | Start 3DS authentication |
-| Complete | Complete 3DS authentication |
-| Lookup | Check 3DS enrollment |
-| Get Status | Get authentication status |
-| Submit Fingerprint | Submit device fingerprint (3DS2) |
-| Submit Challenge | Submit challenge response |
+| Create | Create a new payment receiver |
+| Get | Retrieve receiver configuration |
+| List | List all payment receivers |
+| Update | Update receiver settings |
+| Delete | Remove a payment receiver |
+| Deliver | Deliver payment to receiver |
 
-### Receiver
-
-Deliver card data to non-gateway APIs (loyalty programs, fraud services, etc.).
+### 5. Certificate
 
 | Operation | Description |
 |-----------|-------------|
-| Create | Create a receiver endpoint |
-| Get | Retrieve receiver details |
-| List | List all receivers |
-| Update | Update receiver configuration |
-| Redact | Delete a receiver |
-| Deliver | Send payment data to receiver |
-
-### Certificate
-
-Manage certificates for Apple Pay and Google Pay.
-
-| Operation | Description |
-|-----------|-------------|
-| Create | Create a certificate |
+| Upload | Upload SSL certificate for secure processing |
 | Get | Retrieve certificate details |
 | List | List all certificates |
-| Update | Update certificate |
-| Download CSR | Download certificate signing request |
-| Upload Signed | Upload signed certificate |
-| Delete | Delete a certificate |
-
-## Trigger Node
-
-The **Spreedly Trigger** node receives webhook events in real-time.
-
-### Supported Events
-
-| Event | Description |
-|-------|-------------|
-| transaction.succeeded | Transaction completed successfully |
-| transaction.failed | Transaction failed |
-| transaction.pending | Transaction is pending |
-| payment_method.added | Payment method created |
-| payment_method.retained | Payment method retained |
-| payment_method.redacted | Payment method deleted |
-| payment_method.updated | Payment method updated |
-| gateway.added | Gateway created |
-| gateway.redacted | Gateway deleted |
-| gateway.retained | Gateway retained |
-| receiver.added | Receiver created |
-| receiver.redacted | Receiver deleted |
-| certificate.added | Certificate created |
+| Update | Update certificate information |
+| Delete | Remove certificate |
+| Verify | Verify certificate validity |
 
 ## Usage Examples
 
-### Basic Purchase
-
-```
-1. Spreedly: Create Credit Card token
-   - Card Number: 4111111111111111
-   - Expiration: 12/2025
-   - CVV: 123
-   - Retain: Yes
-
-2. Spreedly: Purchase
-   - Gateway Token: [your_gateway_token]
-   - Payment Method Token: {{ $node["Spreedly"].json.token }}
-   - Amount: 99.99
-   - Currency: USD
+```javascript
+// Process a credit card payment
+{
+  "payment_method_token": "{{$node['Create Payment Method'].json['payment_method']['token']}}",
+  "amount": 2500,
+  "currency_code": "USD",
+  "gateway_token": "{{$node['Get Gateway'].json['gateway']['token']}}",
+  "order_id": "ORDER-123"
+}
 ```
 
-### Multi-Gateway Failover
-
+```javascript
+// Create a payment method with credit card
+{
+  "credit_card": {
+    "number": "4111111111111111",
+    "verification_value": "123",
+    "month": "12",
+    "year": "2025",
+    "first_name": "John",
+    "last_name": "Doe"
+  },
+  "email": "john.doe@example.com"
+}
 ```
-1. Spreedly: Purchase (Primary Gateway)
-   - Continue on Fail: Yes
 
-2. IF: Check if succeeded
-   - Condition: {{ $json.succeeded }} equals true
-
-3. Spreedly: Purchase (Backup Gateway)
-   - Same payment method token works!
+```javascript
+// Configure a Stripe gateway
+{
+  "gateway_type": "stripe",
+  "login": "sk_test_123456789",
+  "password": "",
+  "server": "https://api.stripe.com",
+  "test": true
+}
 ```
 
-## Universal Tokenization
-
-Spreedly's key advantage is universal tokenization. When you tokenize a payment method, the resulting token works across all 100+ gateways without re-collecting card data.
-
-## 3D Secure Flow
-
-For Strong Customer Authentication (SCA) compliance, use the 3D Secure flow. Initialize authentication, redirect the customer to complete the bank challenge, then complete the transaction when they return.
-
-## Supported Gateways
-
-Spreedly supports 100+ payment gateways including Stripe, Braintree, Adyen, Authorize.Net, CyberSource, PayPal Commerce Platform, Worldpay, Checkout.com, Square, NMI, and many more.
+```javascript
+// List transactions with date filter
+{
+  "since_token": "",
+  "count": 20,
+  "order": "desc",
+  "created_at": "2024-01-01T00:00:00Z"
+}
+```
 
 ## Error Handling
 
-The node provides detailed error messages from Spreedly's API including error codes, human-readable messages, and AVS/CVV verification results.
-
-## Security Best Practices
-
-1. Never log full card numbers - use tokens
-2. Use sandbox mode for testing
-3. Enable 3D Secure for SCA compliance
-4. Regularly rotate API credentials
-5. Use webhook signatures for verification
+| Error | Description | Solution |
+|-------|-------------|----------|
+| Authentication Failed | Invalid API credentials | Verify environment key and access secret |
+| Payment Method Invalid | Card details are incorrect | Check card number, CVV, and expiration date |
+| Gateway Error | Payment gateway rejected transaction | Review gateway configuration and test credentials |
+| Insufficient Funds | Customer's account lacks funds | Request alternative payment method |
+| Transaction Not Found | Invalid transaction token | Verify transaction token and permissions |
+| Rate Limit Exceeded | Too many API requests | Implement exponential backoff retry logic |
 
 ## Development
 
 ```bash
-# Run linting
-npm run lint
-
-# Fix linting issues
-npm run lint:fix
-
-# Run tests
-npm test
-
-# Run tests with coverage
-npm run test:coverage
-
-# Build the project
+npm install
 npm run build
-
-# Watch mode for development
+npm test
+npm run lint
 npm run dev
 ```
 
@@ -287,26 +209,22 @@ Permitted for personal, educational, research, and internal business use.
 ### Commercial Use
 Use of this node within any SaaS, PaaS, hosted platform, managed service, or paid automation offering requires a commercial license.
 
-For licensing inquiries:
-**licensing@velobpa.com**
+For licensing inquiries: **licensing@velobpa.com**
 
 See [LICENSE](LICENSE), [COMMERCIAL_LICENSE.md](COMMERCIAL_LICENSE.md), and [LICENSING_FAQ.md](LICENSING_FAQ.md) for details.
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run tests: `npm test`
-5. Submit a pull request
+Contributions are welcome! Please ensure:
+
+1. Code follows existing style conventions
+2. All tests pass (`npm test`)
+3. Linting passes (`npm run lint`)
+4. Documentation is updated for new features
+5. Commit messages are descriptive
 
 ## Support
 
-- **Documentation**: [Spreedly API Docs](https://docs.spreedly.com/)
 - **Issues**: [GitHub Issues](https://github.com/Velocity-BPA/n8n-nodes-spreedly/issues)
-- **Commercial Support**: licensing@velobpa.com
-
-## Acknowledgments
-
-- [Spreedly](https://spreedly.com) for their payment orchestration platform
-- [n8n](https://n8n.io) for the workflow automation platform
+- **Spreedly API Documentation**: [docs.spreedly.com](https://docs.spreedly.com)
+- **Spreedly Community**: [community.spreedly.com](https://community.spreedly.com)
